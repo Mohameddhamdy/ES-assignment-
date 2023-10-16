@@ -1,0 +1,38 @@
+cpp
+#include <FreeRTOS.h>
+#include <task.h>
+
+// C++ class
+class MyClass {
+public:
+  void doSomething() {
+    // Your code here
+  }
+};
+
+// Task function
+void myTask(void* pvParameters) {
+  MyClass myObject;
+
+  while(1) {
+    myObject.doSomething();
+
+    // Delay for 1 second
+    vTaskDelay(pdMS_TO_TICKS(1000));
+  }
+}
+
+void setup() {
+  // Create a task
+  xTaskCreate(myTask, "MyTask", configMINIMAL_STACK_SIZE, NULL, 1, NULL);
+
+  // Start the scheduler
+  vTaskStartScheduler();
+}
+
+int main() {
+  setup();
+
+  // Program should never reach here
+  return 0;
+}
