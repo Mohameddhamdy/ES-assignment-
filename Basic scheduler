@@ -1,0 +1,52 @@
+cpp
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+struct Task {
+    std::string name;
+    int priority;
+    bool completed;
+
+    Task(const std::string& taskName, int taskPriority) :
+        name(taskName), priority(taskPriority), completed(false) {}
+};
+
+class Scheduler {
+private:
+    std::vector<Task> tasks;
+
+public:
+    void addTask(const std::string& name, int priority) {
+        Task task(name, priority);
+        tasks.push_back(task);
+    }
+
+    void run() {
+        while (std::any_of(tasks.begin(), tasks.end(), [](const Task& task) { return !task.completed; })) {
+            auto it = std::min_element(tasks.begin(), tasks.end(),
+                [](const Task& task1, const Task& task2) { return task1.priority < task2.priority; });
+
+            Task& nextTask = *it;
+            std::cout << "Executing task: " << nextTask.name << std::endl;
+
+            // Perform task execution here
+
+            nextTask.completed = true;
+        }
+    }
+};
+
+int main() {
+    Scheduler scheduler;
+
+    // Add tasks to the scheduler
+    scheduler.addTask("Task 1", 2);
+    scheduler.addTask("Task 2", 1);
+    scheduler.addTask("Task 3", 3);
+
+    // Run the scheduler
+    scheduler.run();
+
+    return 0;
+}
