@@ -1,0 +1,29 @@
+stp
+VAR
+    Led1: BOOL;
+    Led2: BOOL;
+    Segments: ARRAY [0..6] OF BOOL;
+
+METHOD LedControl()
+    Led1 := TRUE;  // Turn on LED1
+    Led2 := FALSE; // Turn off LED2
+
+    // Control the segments of the 7-segment display to display a specific digit
+    Segments[0] := TRUE;  // Segment A
+    Segments[1] := TRUE;  // Segment B
+    Segments[2] := TRUE;  // Segment C
+    Segments[3] := TRUE;  // Segment D
+    Segments[4] := TRUE;  // Segment E
+    Segments[5] := TRUE;  // Segment F
+    Segments[6] := FALSE; // Segment G
+
+    // You can add delays or other logic here if needed
+
+    Led1 := FALSE; // Turn off LED1
+    Led2 := TRUE;  // Turn on LED2
+
+    // Control the segments of the 7-segment display to display another digit
+    // ...
+
+END_METHOD
+
