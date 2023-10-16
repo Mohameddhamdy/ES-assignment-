@@ -1,0 +1,54 @@
+cpp
+#include <iostream>
+#include <cmath>
+
+// Function to convert a decimal number to binary
+void decToBinary(int n, int binaryNum[])
+{
+    // Size of an integer is assumed to be 16 bits
+    for (int i = 15; i >= 0; i--) {
+        int k = n >> i;
+        if (k & 1)
+            binaryNum[15 - i] = 1;
+        else
+            binaryNum[15 - i] = 0;
+    }
+}
+
+// Function to convert a binary number to decimal
+int binaryToDec(int binaryNum[])
+{
+    int decimal = 0;
+    for (int i = 0; i < 16; i++) {
+        decimal += binaryNum[i] * pow(2, 15 - i);
+    }
+    return decimal;
+}
+
+// Function to simulate the DAC
+void simulateDAC(int input)
+{
+    int binaryNum[16];
+    decToBinary(input, binaryNum);
+
+    // Convert the binary number to decimal
+    int output = binaryToDec(binaryNum);
+
+    // Display the input and output values
+    std::cout << "Input: " << input << std::endl;
+    std::cout << "Output: " << output << std::endl;
+}
+
+int main()
+{
+    int input;
+
+    // Get user input
+    std::cout << "Enter a decimal value (0-65535): ";
+    std::cin >> input;
+
+    // Simulate the DAC
+    simulateDAC(input);
+
+    return 0;
+}
