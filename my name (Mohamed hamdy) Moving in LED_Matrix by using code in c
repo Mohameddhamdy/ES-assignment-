@@ -1,0 +1,63 @@
+c
+#include <Adafruit_GFX.h>
+#include <Adafruit_MAX7219.h>
+#include <SPI.h>
+
+#define DATA_PIN 12
+#define CLK_PIN 11
+#define CS_PIN 10
+
+Adafruit_MAX7219 matrix = Adafruit_MAX7219(DATA_PIN, CLK_PIN, CS_PIN, 1);
+
+void setup() {
+  matrix.begin();
+  matrix.setBrightness(5);
+  matrix.setRotation(0);
+}
+
+void loop() {
+  // Define your name as an array of characters
+  char name[] = "Mohamed Hamdy";
+  int nameLength = sizeof(name) - 1; // Exclude the null terminator
+
+  // Scroll your name across the LED matrix
+  for (int offset = 0; offset < (nameLength * 6 + matrix.width()); offset++) {
+    matrix.clear();
+    for (int i = 0; i < matrix.width(); i++) {
+      int charIndex = (i + offset) / 6;
+      int columnIndex = (i + offset) % 6;
+      if (charIndex < nameLength) {
+        drawChar(columnIndex * 8, name[charIndex]);
+      }
+    }
+    matrix.write();
+    delay(100); // Adjust the delay to control scrolling speed
+  }
+}
+
+void drawChar(int x, char c) {
+  if (c >= 'A' && c <= 'Z') {
+    c += 32; // Convert uppercase letters to lowercase
+  }
+
+  if (c >= 'a' && c <= 'z') {
+    int charIndex = c - 'a';
+    for (int i = 0; i < 8; i++) {
+      matrix.drawPixel(x, i, (pgm_read_byte(&(characters[charIndex][i])) & (1 << 0)));
+    }
+  }
+}
+
+// Character bitmaps (8x8) for lowercase letters a-z
+const PROGMEM uint8_t characters[26][8] = {
+  // Add the bitmap data for each letter here
+  // Example:
+  // {B00000000,
+  //  B00011000,
+  //  B00100100,
+  //  B00100100,
+  //  B00111100,
+  //  B00100100,
+  //  B00100100,
+  //  B00000000},
+};
