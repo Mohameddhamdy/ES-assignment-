@@ -1,0 +1,17 @@
+cpp
+const int interruptPin = 2;  // Pin connected to the interrupt
+
+void setup() {
+  pinMode(interruptPin, INPUT_PULLUP);  // Set the interrupt pin as input with internal pull-up resistor
+  attachInterrupt(digitalPinToInterrupt(interruptPin), handleInterrupt, FALLING);  // Attach interrupt handler to the falling edge of the signal
+}
+
+void loop() {
+  // Main program loop
+}
+
+void handleInterrupt() {
+  // Interrupt handler routine
+  // Add the code to be executed when the interrupt occurs
+  // For example, you can toggle an LED or print a message
+}
