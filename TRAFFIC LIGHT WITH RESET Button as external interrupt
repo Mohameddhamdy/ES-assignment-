@@ -1,0 +1,42 @@
+stp
+VAR
+    RedLight: BOOL;
+    YellowLight: BOOL;
+    GreenLight: BOOL;
+    ResetButton: BOOL;
+
+METHOD TrafficLightControl()
+    ResetButton := FALSE;  // Initialize the reset button state
+
+    // Define the interrupt handler for the reset button
+    INTERRUPT HandlerForResetButton()
+        ResetButton := TRUE;  // Set the reset button state to indicate it has been pressed
+    END_INTERRUPT
+
+    // Initialize the traffic light state
+    RedLight := TRUE;
+    YellowLight := FALSE;
+    GreenLight := FALSE;
+
+    WHILE TRUE DO
+        IF ResetButton THEN
+            // Reset button is pressed, reset the traffic light state
+            RedLight := TRUE;
+            YellowLight := FALSE;
+            GreenLight := FALSE;
+            ResetButton := FALSE;  // Reset the reset button state
+        ELSE
+            // Normal traffic light operation
+            RedLight := TRUE;
+            Wait(5);  // Wait for a certain period for the red light
+            RedLight := FALSE;
+            YellowLight := TRUE;
+            Wait(2);  // Wait for a certain period for the yellow light
+            YellowLight := FALSE;
+            GreenLight := TRUE;
+            Wait(5);  // Wait for a certain period for the green light
+            GreenLight := FALSE;
+        END_IF
+    END_WHILE
+
+END_METHOD
