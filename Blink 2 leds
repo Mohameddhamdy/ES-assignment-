@@ -1,0 +1,41 @@
+cpp
+#include <iostream>
+#include <chrono>
+#include <thread>
+
+int main() {
+    // Assuming LED pins are connected to GPIO pins 1 and 2
+    int ledPin1 = 1;
+    int ledPin2 = 2;
+
+    // Set GPIO pins as output
+    // Code to set the pins as output depends on the platform you're using
+    // You may need to use a library or specific API for your hardware
+
+    // Blink the LEDs 10 times
+    for (int i = 0; i < 10; i++) {
+        // Turn on LED 1
+        // Code to set the pin high
+        std::cout << "LED 1 ON" << std::endl;
+
+        // Wait for 1 second
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+
+        // Turn off LED 1
+        // Code to set the pin low
+        std::cout << "LED 1 OFF" << std::endl;
+
+        // Turn on LED 2
+        // Code to set the pin high
+        std::cout << "LED 2 ON" << std::endl;
+
+        // Wait for 1 second
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+
+        // Turn off LED 2
+        // Code to set the pin low
+        std::cout << "LED 2 OFF" << std::endl;
+    }
+
+    return 0;
+}
